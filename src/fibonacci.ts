@@ -1,4 +1,9 @@
-export const computeFibonacciNumber = (position: number): number => {
+export const computeFibonacciNumber = (position: number | null): number => {
+    let notNullPosition = position;
+    if (notNullPosition === null) {
+        notNullPosition = 1;
+    }
+
     if (position === 0) {
         return 0;
     }
@@ -6,22 +11,27 @@ export const computeFibonacciNumber = (position: number): number => {
         return computeNegativeFibonacci(position);
     }
 
-    if (position <= 2) {
+    if (notNullPosition <= 2) {
         return 1;
     }
 
-    let i = 1;
-    let j = 1;
+    let smallFibonacciNumber = 1;
+    let largeFibonacciNumber = 1;
 
     let currentPosition = 2;
     while (currentPosition < position) {
-        const temp = i;
-        i = j;
-        j += temp;
+        const nextFibonacciNumber = smallFibonacciNumber + largeFibonacciNumber;
+        smallFibonacciNumber = largeFibonacciNumber;
+        largeFibonacciNumber = nextFibonacciNumber;
         currentPosition++;
     }
-    return j;
+    return largeFibonacciNumber;
 };
+
+export const computeFibonacciArray = (start: number, endInclusive: number): number[] => {
+    const inputArray = [...Array(endInclusive - start + 1).keys()].map(i => i + start);
+    return inputArray.map(x => computeFibonacciNumber(x));
+}
 
 const computeNegativeFibonacci = (position: number): number => {
     if (position >= 0) {
