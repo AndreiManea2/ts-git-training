@@ -1,5 +1,11 @@
-export const computeFibonacciNumber = (position: number): number => {
-    if (position === 1 || position === 2) {
+
+export const computeFibonacciNumber = (position: number | null): number => {
+    let notNullPosition = position;
+    if (notNullPosition === null) {
+        notNullPosition = 1;   
+    }
+
+    if (notNullPosition <= 2) {
         return 1;
     }
 
